@@ -1,0 +1,80 @@
+<Project>
+
+    <PropertyGroup>
+        <OutputPath>$(MsBuildThisFileDirectory)\Output\$(Configuration)\</OutputPath>
+        <LangVersion>preview</LangVersion>
+        <GamePath>$(MSBuildThisFileDirectory)Resonite\</GamePath>
+        <Authors>knah</Authors>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(HasUnityDeps)' == 'true'">
+        <TargetFramework>net472</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(HasUnityDeps)' != 'true'">
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+    
+    <ItemGroup Condition="'$(IsStandalone)' != 'true'">
+        <Compile Include="$(MsBuildThisFileDirectory)/Common/CommonModBase.cs" Link="Common/CommonModBase.cs" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(IsStandalone)' != 'true'">
+        <Reference Include="ResoniteModLoader">
+            <HintPath>$(GamePath)ResoniteModLoader.dll</HintPath>
+            <HintPath>$(GamePath)Libraries\ResoniteModLoader.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="HarmonyLib">
+            <HintPath>$(GamePath)rml_libs\0Harmony.dll</HintPath>
+            <HintPath Condition="Exists('$(GamePath)0Harmony.dll')">$(GamePath)0Harmony.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+            <HintPath>$(GamePath)/Newtonsoft.Json.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(HasUnityDeps)' == 'true'">
+        <Reference Include="UnityFrooxEngineRunner">
+            <HintPath>$(GamePath)Resonite_Data\Managed\UnityFrooxEngineRunner.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(GamePath)Resonite_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="UnityEngine.VRModule">
+            <HintPath>$(GamePath)Resonite_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Unity.PostProcessing.Runtime">
+            <HintPath>$(GamePath)Resonite_Data/Managed/Unity.PostProcessing.Runtime.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(GamePath)/Assembly-CSharp.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+    
+    <ItemGroup  Condition="'$(NoFrooxEngine)' != 'true'">
+        <Reference Include="FrooxEngine">
+            <HintPath>$(GamePath)/FrooxEngine.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="ProtoFluxBindings">
+            <HintPath>$(GamePath)/ProtoFluxBindings.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Elements.Core">
+            <HintPath>$(GamePath)/Elements.Core.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Elements.Assets">
+            <HintPath>$(GamePath)/Elements.Assets.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+</Project>
